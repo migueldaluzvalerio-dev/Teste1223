@@ -1,0 +1,582 @@
+/* =====================================================
+   PALETA: verde + cinza
+   ===================================================== */
+:root {
+    --verde: #1f8a4c;
+    --verde-escuro: #14532d;
+    --verde-claro: #d7efe0;
+    --cinza-fundo: #d5d9dd;
+    --cinza-painel: #f1f3f5;
+    --cinza-borda: #d0d5da;
+    --cinza-escuro: #2b3138;
+    --cinza-texto: #2f363d;
+}
+
+/* =====================================================
+   BASE
+   ===================================================== */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--cinza-texto);
+    background-color: var(--cinza-fundo);
+    margin: 0;
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =====================================================
+   ANIMAÇÕES (keyframes)
+   ===================================================== */
+@keyframes surgir {
+    from { opacity: 0; translate: 0 30px; }
+    to   { opacity: 1; translate: 0 0; }
+}
+
+@keyframes descer {
+    from { opacity: 0; translate: 0 -100%; }
+    to   { opacity: 1; translate: 0 0; }
+}
+
+@keyframes gradiente {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes flutuar {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 30px -25px; }
+}
+
+@keyframes brilho {
+    from { background-position: -200% 0; }
+    to   { background-position: 200% 0; }
+}
+
+/* =====================================================
+   CABEÇALHO (position: sticky + flexbox)
+   ===================================================== */
+.topo {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px 30px;
+    color: white;
+    background: var(--cinza-escuro);
+    border-bottom: 4px solid var(--verde);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    animation: descer 0.7s ease-out both;
+}
+
+.topo h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu a {
+    position: relative;
+    padding-bottom: 4px;
+    color: #e5e7eb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.menu a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #4ade80;
+    transition: width 0.3s ease;
+}
+
+.menu a:hover {
+    color: white;
+}
+
+.menu a:hover::after {
+    width: 100%;
+}
+
+/* =====================================================
+   CONTEÚDO
+   ===================================================== */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+section {
+    scroll-margin-top: 90px;
+}
+
+/* cada seção vira um painel cinza claro */
+main section:not(.hero) {
+    background-color: var(--cinza-painel);
+    border: 1px solid var(--cinza-borda);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 28px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+main section p {
+    margin-top: 0;
+}
+
+/* títulos com barra verde que cresce no hover do painel */
+h2 {
+    position: relative;
+    margin: 0 0 22px;
+    padding-bottom: 12px;
+    color: var(--verde-escuro);
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--verde), #4ade80);
+    transition: width 0.5s ease;
+}
+
+section:hover > h2::after {
+    width: 140px;
+}
+
+.subtitulo {
+    margin-top: 36px;
+}
+
+/* =====================================================
+   HERO (apresentação)
+   ===================================================== */
+.hero {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 64px 20px;
+    margin-bottom: 28px;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    background: linear-gradient(120deg, #2b3138, var(--verde-escuro), var(--verde), #2b3138);
+    background-size: 300% 300%;
+    animation: gradiente 14s ease infinite;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+/* bolas decorativas que flutuam */
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.07);
+    animation: flutuar 9s ease-in-out infinite;
+}
+
+.hero::before {
+    width: 220px;
+    height: 220px;
+    top: -70px;
+    left: -50px;
+}
+
+.hero::after {
+    width: 300px;
+    height: 300px;
+    right: -80px;
+    bottom: -120px;
+    animation-delay: -4s;
+}
+
+.hero > * {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    animation: surgir 0.9s ease-out both;
+}
+
+.hero > :nth-child(1) { animation-delay: 0.15s; }
+.hero > :nth-child(2) { animation-delay: 0.35s; }
+.hero > :nth-child(3) { animation-delay: 0.55s; }
+
+.hero h2 {
+    padding: 0;
+    color: white;
+    font-size: 2.6rem;
+}
+
+.hero h2::after {
+    display: none;
+}
+
+.hero p {
+    max-width: 560px;
+    color: #e5e7eb;
+}
+
+.etiqueta {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    color: #86efac;
+}
+
+/* =====================================================
+   SOBRE MIM (flexbox)
+   ===================================================== */
+.sobre {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.sobre img {
+    width: 200px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    border: 4px solid var(--verde);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease;
+}
+
+.sobre img:hover {
+    transform: rotate(-3deg) scale(1.05);
+}
+
+.curiosidades {
+    padding-left: 20px;
+}
+
+.curiosidades li {
+    margin-bottom: 4px;
+    padding-left: 4px;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.curiosidades li::marker {
+    color: var(--verde);
+}
+
+.curiosidades li:hover {
+    transform: translateX(8px);
+    color: var(--verde-escuro);
+}
+
+/* =====================================================
+   GRID + CARTÕES
+   ===================================================== */
+.grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 22px;
+}
+
+.cartao {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 12px;
+    padding: 12px;
+    background-color: white;
+    border: 1px solid var(--cinza-borda);
+    border-radius: 14px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.cartao:hover {
+    transform: translateY(-8px);
+    border-color: var(--verde);
+    box-shadow: 0 14px 26px rgba(20, 83, 45, 0.25);
+}
+
+.cartao img {
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+
+.cartao:hover img {
+    transform: scale(1.05);
+}
+
+.corpo h3 {
+    margin: 0 0 6px;
+    color: var(--verde-escuro);
+}
+
+.corpo p {
+    margin: 0;
+}
+
+.foto-familia {
+    grid-column: 1 / -1;
+}
+
+.foto-familia img {
+    height: auto;
+    max-height: 500px;
+}
+
+/* links dos cartões viram botõezinhos (flexbox) */
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.cartao .links a {
+    display: block;
+    padding: 8px 12px;
+    color: var(--verde-escuro);
+    background-color: var(--verde-claro);
+    border-radius: 8px;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.cartao .links a:hover {
+    color: white;
+    background-color: var(--verde);
+    transform: translateX(6px);
+}
+
+/* favoritos em flexbox, última linha centralizada */
+.favoritos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
+}
+
+.favoritos .cartao {
+    flex: 1 1 250px;
+    max-width: 320px;
+}
+
+/* faixa "Meu time é o Palmeiras" com brilho passando */
+#destaque {
+    margin: 0 0 24px;
+    padding: 14px 18px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    border-radius: 12px;
+    background: linear-gradient(110deg, var(--verde-escuro) 30%, #4ade80 50%, var(--verde-escuro) 70%);
+    background-size: 200% 100%;
+    animation: brilho 5s linear infinite;
+}
+
+/* filmes: pôster inteiro */
+.filmes {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.filme img {
+    height: 330px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* =====================================================
+   FOTOS GRANDES (escola / EcoCiente)
+   ===================================================== */
+.fotos {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.foto {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--cinza-borda);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.foto img {
+    display: block;
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.foto:hover img {
+    transform: scale(1.08);
+}
+
+.foto figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 40px 18px 14px;
+    color: white;
+    font-weight: bold;
+    background: linear-gradient(transparent, rgba(20, 40, 28, 0.9));
+    transition: padding-bottom 0.4s ease;
+}
+
+.foto:hover figcaption {
+    padding-bottom: 24px;
+}
+
+/* =====================================================
+   LINKS E RODAPÉ
+   ===================================================== */
+a {
+    color: var(--verde-escuro);
+}
+
+.rodape {
+    margin-top: 20px;
+    padding: 22px 15px;
+    text-align: center;
+    color: #d1d5db;
+    background: var(--cinza-escuro);
+    border-top: 4px solid var(--verde);
+}
+
+.rodape p {
+    margin: 0;
+}
+
+/* =====================================================
+   ANIMAÇÃO AO ROLAR (navegadores novos)
+   ===================================================== */
+@supports (animation-timeline: view()) {
+    main section:not(.hero),
+    .cartao,
+    .foto {
+        animation: surgir linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 35%;
+    }
+}
+
+/* quem prefere menos movimento não vê animações */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* =====================================================
+   RESPONSIVIDADE
+   ===================================================== */
+@media (max-width: 800px) {
+    .topo {
+        padding: 12px 20px;
+    }
+
+    main {
+        padding: 16px 14px;
+    }
+
+    main section:not(.hero) {
+        padding: 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    .topo {
+        position: static;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu {
+        justify-content: center;
+        gap: 10px 16px;
+    }
+
+    .hero {
+        padding: 44px 16px;
+    }
+
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+
+    .sobre {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .curiosidades {
+        text-align: left;
+    }
+
+    .grade,
+    .fotos,
+    .filmes {
+        grid-template-columns: 1fr;
+    }
+
+    .favoritos .cartao {
+        max-width: none;
+    }
+
+    .cartao img {
+        height: 200px;
+    }
+
+    .foto img {
+        height: 320px;
+    }
+
+    .filme img {
+        height: 300px;
+    }
+
+    section {
+        scroll-margin-top: 10px;
+    }
+}
